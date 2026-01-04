@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.coverage
+
+# Database
+*.db
+*.sqlite
+bot_database.db
+
+# Environment
+.env
+example/.env
+
+# IDE
+.vscode/
+.idea/
+.cursorrules
+
+# Logs
+*.log
+yookassa_webhook_events.log
+yookassa_webhook.log
+
+# Session files
+*.session
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Scripts
+*.bat
+*.sh
+setup.bat
+start_bot.bat
+run_tests.bat
+update_certificates.bat
+
+# Test files
+test_*.py
+run_bot_tests.py
+run_portfolio_tests.py
+
+# Example files
+example/
+
+# Portfolio materials
+PORTFOLIO_*.md
+SCREencast_*.txt
+SCREencast_*.md
+
+# Documentation (keep only main README)
+AI_ASSISTANT_PLAN.md
+CONTRIBUTING.md
+FIXES_SUMMARY.md
+GET_PROVIDER_TOKEN.md
+INSTALL.md
+QUICKSTART.md
+TESTING_DOCUMENTATION.md
+TESTS_README.md
+TEST_PRESENTATION_SCRIPT.md
