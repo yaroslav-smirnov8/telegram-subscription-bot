@@ -1,4 +1,4 @@
-"""
+﻿"""
 Скрипт для проверки конфигурации бота перед запуском
 """
 
@@ -41,46 +41,35 @@ def main():
     print("Проверка конфигурации Telegram бота")
     print("=" * 60)
     print()
-    
+
     all_ok = True
-    
+
     # Обязательные параметры
-    print("📋 Обязательные параметры:")
+    print("🔑 Обязательные параметры:")
     all_ok &= check_env_variable("TELEGRAM_API_TOKEN", required=True)
     all_ok &= check_env_variable("TELEGRAM_GROUP_ID", required=True)
     all_ok &= check_env_variable("TELEGRAM_ADMIN_IDS", required=True)
     print()
-    
+
     # Параметры платежей
     print("💳 Параметры платежей:")
     all_ok &= check_env_variable("PROVIDER_TOKEN", required=True)
-    all_ok &= check_env_variable("YOOKASSA_SHOP_ID", required=False)
-    all_ok &= check_env_variable("YOOKASSA_SECRET_KEY", required=False)
     print()
-    
-    # Параметры Prodamus (устаревшие, но проверяем)
-    print("🔧 Параметры Prodamus (устаревшие):")
-    check_env_variable("PRODAMUS_API_KEY", required=False)
-    check_env_variable("PRODAMUS_PROJECT_ID", required=False)
-    print()
-    
+
     # URL для редиректа
     print("🔗 URL для редиректа после оплаты:")
     check_env_variable("PAYMENT_SUCCESS_URL", required=False)
     check_env_variable("PAYMENT_FAIL_URL", required=False)
     print()
-    
+
     # Проверка файлов
     print("📁 Проверка файлов:")
     files_to_check = [
         "bot.py",
         "db.py",
-        "telegram_payments.py",
-        "yookassa_subscriptions.py",
-        "yookassa_webhook.py",
         "requirements.txt"
     ]
-    
+
     for file in files_to_check:
         if Path(file).exists():
             print(f"✅ {file} найден")
@@ -88,9 +77,9 @@ def main():
             print(f"❌ {file} не найден")
             all_ok = False
     print()
-    
+
     # Проверка базы данных
-    print("💾 База данных:")
+    print("📊 База данных:")
     db_file = Path("bot_database.db")
     if db_file.exists():
         size = db_file.stat().st_size
@@ -98,11 +87,11 @@ def main():
     else:
         print("ℹ️  bot_database.db будет создана при первом запуске")
     print()
-    
+
     # Итоговый результат
     print("=" * 60)
     if all_ok:
-        print("✅ Конфигурация корректна! Можно запускать бота.")
+        print("✅ Конфигурация корректна! Можно запустить бота.")
         print()
         print("Для запуска используйте:")
         print("  Windows: python bot.py")
