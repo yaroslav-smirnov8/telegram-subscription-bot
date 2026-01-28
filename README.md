@@ -65,6 +65,8 @@ python bot.py
 
 The bot will run in demo mode - all features work, but no real payments are processed.
 
+It's designed to run within the Telegram ecosystem and requires a Telegram Bot token.
+
 ## Payment Providers
 
 ### Demo Provider (Default)
