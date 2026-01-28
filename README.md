@@ -1,6 +1,26 @@
 # Telegram Subscription Bot
 
+**Type:** Telegram Bot with Payment Integration
+
 A flexible, open-source Telegram bot for managing subscriptions with pluggable payment providers.
+
+## Platform & Runtime Requirements
+
+This is a **Telegram Bot** for community monetization. It is platform-dependent and requires external services.
+
+**Core Dependencies:**
+- Telegram Bot API (bot token required)
+- MySQL 5.7+ database with ACID transaction support
+- Payment provider: Stripe, YooKassa, or other HTTPS-accessible API
+- Python 3.8+ with asyncio runtime
+
+**Why local execution without external services is not applicable:**
+- Telegram Bot API requires valid bot token and network connectivity
+- Database requires MySQL instance (local Docker or remote)
+- Payment provider credentials (API keys, webhook signing keys) required for payment flows
+- Webhook endpoints for payment provider callbacks must be internet-accessible
+
+This is standard for monetized Telegram systems. The architecture assumes production payment infrastructure.
 
 ## Features
 
@@ -225,6 +245,36 @@ Contributions welcome! To add a new payment provider:
 3. Add configuration example
 4. Update documentation
 5. Submit pull request
+
+## What to Review Instead of Running Locally
+
+Best understood through code review and design analysis:
+
+### Payment Architecture (Adapter Pattern)
+- **Provider Interface Design** (`/payment_providers/base.py`) – Abstract base class defining payment provider contract
+- **Stripe Implementation** (`/payment_providers/stripe_adapter.py`) – Stripe integration with webhook signature verification
+- **Regional Provider Support** – How different providers implement the same interface
+- **Demo Provider** – Testing adapter allowing zero-config integration testing
+
+### Subscription State Machine
+- **Lifecycle States** – pending → active → grace_period → expired → canceled transitions
+- **Automatic Renewals** – Background job checking expiring subscriptions and auto-charging
+- **Failed Payment Recovery** – Grace period logic and retry notifications
+
+### Telegram Integration
+- **Group Membership Management** – Adding/removing users from Telegram groups atomically with subscription updates
+- **Webhook Callbacks** – Bot receiving payment confirmations and triggering membership changes
+- **User Session Management** – Stateless conversation flows for subscription selection
+
+### Webhook Reliability
+- **Signature Verification** – HMAC validation preventing replay attacks
+- **Idempotency Handling** – Database tracking of processed webhooks prevents duplicate charges
+- **Atomic Updates** – Transactions ensuring payment confirmation and membership change together
+
+### Data Integrity & Concurrency
+- **Race Condition Prevention** – Pessimistic locking on subscription updates during concurrent payment processing
+- **Transaction Safety** – ACID guarantees preventing partial writes
+- **User-Provider Mapping** – Preventing orphaned subscriptions and duplicate group access
 
 ## License
 
